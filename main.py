@@ -7,7 +7,6 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.types import Update
 from fastapi import FastAPI
-from fastapi.templating import Jinja2Templates
 from fastapi import Request
 
 from api import api_router
