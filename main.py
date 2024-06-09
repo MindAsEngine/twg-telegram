@@ -14,9 +14,11 @@ from api import api_router
 from bot import bot_router
 
 import env_config as config
+from bot.utils import storage
 
-bot = Bot(token=config.BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-dp = Dispatcher()
+bot = Bot(token=config.BOT_TOKEN,
+          default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+dp = Dispatcher(storage=storage, bot=bot)
 
 
 @asynccontextmanager
