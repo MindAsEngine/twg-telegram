@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "twg-bot"
+name = "twg-telegram"
 version = "0.1.0"
 description = ""
 authors = ["olshanskyvv <90987935+olshanskyvv@users.noreply.github.com>"]
