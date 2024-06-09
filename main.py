@@ -16,6 +16,11 @@ from bot import bot_router
 import env_config as config
 from bot.utils import storage
 
+logging.basicConfig(
+    level=logging.INFO,
+    format=u'%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s'
+)
+
 bot = Bot(token=config.BOT_TOKEN,
           default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 dp = Dispatcher(storage=storage, bot=bot)
@@ -31,7 +36,6 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
-templates = Jinja2Templates(directory="templates")
 
 
 @app.post("/webhook")
@@ -45,13 +49,6 @@ dp.include_router(bot_router)
 
 
 def main():
-    logging.basicConfig(
-        level=logging.INFO,
-        format=u'%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s',
-        filename='logs.log',
-        filemode='a'
-    )
-
     try:
         uvicorn.run(app, port=5000)
     except KeyboardInterrupt:
