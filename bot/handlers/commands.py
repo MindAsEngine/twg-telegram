@@ -1,7 +1,7 @@
 import logging
 
 from aiogram import Router
-from aiogram.filters import Command
+from aiogram.filters import Command, CommandObject
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from aiogram.types.input_file import FSInputFile
@@ -16,15 +16,15 @@ router = Router()
 
 
 @router.message(Command('start'))
-async def start_command(message: Message, state: FSMContext) -> None:
+async def start_command(message: Message, state: FSMContext, command: CommandObject) -> None:
     if (await state.get_data()) is None:
-        await state.set_state(UserState().to_dict())
+        await state.set_data(UserState().to_dict())
     user_state = UserState(**(await state.get_data()))
 
     is_linked = None
-    if len(message.text.split()) == 2:
+    if command.args is not None:
         username = user_state.username
-        user_state.username = message.text.split()[1]
+        user_state.username = command.args
         tg_id = message.chat.id
         try:
             user_state = await link_account(user_state, tg_id)
