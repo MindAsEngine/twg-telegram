@@ -2,27 +2,19 @@ import logging
 from contextlib import asynccontextmanager
 
 import uvicorn
-from aiogram import Bot, Dispatcher
-from aiogram.client.default import DefaultBotProperties
-from aiogram.enums import ParseMode
 from aiogram.types import Update
 from fastapi import FastAPI
 from fastapi import Request
 
 from api import api_router
-from bot import bot_router
+from bot import bot, dp
 
 import env_config as config
-from bot.utils import storage
 
 logging.basicConfig(
     level=logging.INFO,
     format=u'%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s'
 )
-
-bot = Bot(token=config.BOT_TOKEN,
-          default=DefaultBotProperties(parse_mode=ParseMode.HTML))
-dp = Dispatcher(storage=storage, bot=bot)
 
 
 @asynccontextmanager
@@ -44,7 +36,6 @@ async def webhook(request: Request) -> None:
 
 
 app.include_router(api_router, prefix="/api")
-dp.include_router(bot_router)
 
 
 def main():

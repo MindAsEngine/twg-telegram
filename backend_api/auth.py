@@ -1,5 +1,3 @@
-import logging
-
 from backend_api.exceptions import AuthError, LinkError
 from backend_api.utils import get_client
 from bot.models import UserState
