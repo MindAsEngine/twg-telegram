@@ -3,7 +3,7 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
 from bot.handlers import router
-import env_config as config
+import config
 from bot.utils import storage
 
 bot = Bot(token=config.BOT_TOKEN,
