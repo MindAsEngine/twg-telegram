@@ -1,6 +1,6 @@
 from aiogram.fsm.storage.redis import RedisStorage, Redis
 
-import env_config as config
+import config
 
 storage = RedisStorage(
     Redis(

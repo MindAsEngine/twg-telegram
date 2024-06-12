@@ -2,7 +2,7 @@ import asyncio
 
 from httpx import AsyncClient
 
-import env_config as config
+import config
 
 
 async def get_client(access_token: str | None = None) -> AsyncClient:

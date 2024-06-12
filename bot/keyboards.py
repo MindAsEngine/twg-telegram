@@ -4,7 +4,7 @@ from aiogram.types import InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from bot.models import UserState
-from env_config import WEBSITE_URL
+from config import WEBSITE_URL
 
 
 def get_start_keyboard(user: UserState) -> InlineKeyboardMarkup:

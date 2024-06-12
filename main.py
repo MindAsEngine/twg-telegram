@@ -9,7 +9,7 @@ from fastapi import Request
 from api import api_router
 from bot import bot, dp
 
-import env_config as config
+import config
 
 logging.basicConfig(
     level=logging.INFO,
