@@ -9,7 +9,7 @@ from fastapi import Request
 from api import api_router
 from bot import bot, dp
 
-import config
+from config import WEBHOOK_URL
 
 logging.basicConfig(
     level=logging.INFO,
@@ -19,11 +19,13 @@ logging.basicConfig(
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await bot.set_webhook(url=config.WEBHOOK_URL,
+    await bot.set_webhook(url=WEBHOOK_URL,
                           allowed_updates=dp.resolve_used_update_types(),
                           drop_pending_updates=True)
-    yield
-    await bot.delete_webhook()
+    try:
+        yield
+    finally:
+        await bot.delete_webhook(drop_pending_updates=True)
 
 
 app = FastAPI(lifespan=lifespan)

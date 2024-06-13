@@ -1,8 +1,17 @@
-from dataclasses import dataclass
+from pydantic import BaseModel
 
 
-@dataclass
-class UserState:
+class TourFilters(BaseModel):
+    country_ids: list[int] | None = None
+    hotel_ids: list[int] | None = None
+    resort_ids: list[int] | None = None
+    tag_ids: list[int] | None = None
+    tour_stars: list[str] | None = None
+    hospital_ids: list[int] | None = None
+    tour_types: list[str] | None = None
+
+
+class UserState(BaseModel):
     username: str | None
     is_authorized: bool = False
     is_wait_phone: bool = False
@@ -10,33 +19,14 @@ class UserState:
     access_token: str | None = None
     refresh_token: str | None = None
 
-    def __init__(self,
-                 username: str | None = None,
-                 is_authorized: bool = False,
-                 is_wait_phone: bool = False,
-                 is_agent: bool = False,
-                 access_token: str | None = None,
-                 refresh_token: str | None = None,
-                 **_):
-        self.username = username
-        self.is_authorized = is_authorized
-        self.is_wait_phone = is_wait_phone
-        self.is_agent = is_agent
-        self.access_token = access_token
-        self.refresh_token = refresh_token
+    filters: TourFilters | None = TourFilters()
 
-    def to_dict(self) -> dict:
-        return {
-            "username": self.username,
-            "is_authorized": self.is_authorized,
-            "is_wait_phone": self.is_wait_phone,
-            "is_agent": self.is_agent,
-            "access_token": self.access_token,
-            "refresh_token": self.refresh_token
-        }
+    def clear_filters(self) -> None:
+        self.filters = TourFilters()
 
-    def clear(self) -> None:
-        self.is_authorized = False
+    def clear_auth(self):
         self.access_token = None
         self.refresh_token = None
-        self.is_wait_phone = False
+        self.is_authorized = False
+
+
