@@ -3,19 +3,19 @@ from backend_api.utils import get_client
 from bot.models import UserState
 
 
-async def link_account(user: UserState, tg_id: int) -> UserState:
-    client = await get_client(user.access_token)
+async def link_account(user: UserState, tg_id: int, link_uuid: str) -> UserState:
+    client = await get_client()
 
     response = await client.post(
         '/profile/telegram/connect/set_id',
         json={
-            'username': user.username,
+            'uuid': link_uuid,
             'telegramId': str(tg_id)
         }
     )
     if response.status_code != 200:
         raise LinkError('Account link request failed')
-
+    user.is_linked = True
     return user
 
 

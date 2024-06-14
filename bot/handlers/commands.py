@@ -19,28 +19,27 @@ router = Router()
 async def start_command(message: Message, state: FSMContext, command: CommandObject) -> None:
     if (await state.get_data()) is None:
         await state.set_data(UserState().dict())
-    user_state = UserState(**(await state.get_data()))
+    user_state = UserState.parse_obj(await state.get_data())
 
     is_linked = None
     if command.args is not None:
-        old_username = user_state.username
-        user_state.username = command.args
+        link_uuid = command.args
         tg_id = message.chat.id
         try:
-            user_state = await link_account(user_state, tg_id)
+            user_state = await link_account(user_state, tg_id, link_uuid)
             is_linked = True
             user_state = await auth_user(user_state, tg_id)
         except LinkError:
             is_linked = False
-            user_state.username = old_username
         except AuthError:
             user_state.is_authorized = False
 
     try:
-        if user_state.is_authorized:
-            user_state = await validate_token(user_state)
-        else:
-            user_state = await auth_user(user_state, message.from_user.id)
+        if user_state.is_linked:
+            if user_state.is_authorized:
+                user_state = await validate_token(user_state)
+            else:
+                user_state = await auth_user(user_state, message.from_user.id)
     except AuthError:
         user_state.clear_auth()
 
