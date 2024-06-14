@@ -41,7 +41,7 @@ async def start_command(message: Message, state: FSMContext, command: CommandObj
     except AuthError:
         user_state.clear_auth()
 
-    await state.set_data(user_state.dict())
+    await set_state_data(state, user_state)
 
     text = await render_template('start.html',
                                  user=user_state)

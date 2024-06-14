@@ -4,6 +4,13 @@ from bot.fsm.states import UserState
 
 
 async def link_account(user: UserState, tg_id: int, link_uuid: str) -> UserState:
+    """
+    Link telegram account with backend account of user by telegram id and uuid of link request
+    :param user: UserState - state of user
+    :param tg_id: int - telegram id of user
+    :param link_uuid: str - string with uuid of link request
+    :return:
+    """
     client = await get_client()
 
     response = await client.post(
@@ -20,6 +27,12 @@ async def link_account(user: UserState, tg_id: int, link_uuid: str) -> UserState
 
 
 async def auth_user(user: UserState, tg_id: int) -> UserState:
+    """
+    Get refresh token from backend, and fill user state fields
+    :param user: UserState - state of user
+    :param tg_id: int - telegram id of user
+    :return:
+    """
     client = await get_client(user.access_token)
 
     response = await client.get(
@@ -39,6 +52,11 @@ async def auth_user(user: UserState, tg_id: int) -> UserState:
 
 
 async def check_for_agent(user: UserState) -> UserState:
+    """
+    Send request to backend to check agent status of user
+    :param user: UserState - state of user
+    :return:
+    """
     client = await get_client(user.access_token)
 
     response = await client.get('/profile/me')
@@ -50,6 +68,11 @@ async def check_for_agent(user: UserState) -> UserState:
 
 
 async def _refresh_token(user: UserState) -> UserState:
+    """
+    Get new access token from backend by refresh token from state
+    :param user: UserState - state of user
+    :return:
+    """
     client = await get_client(user.access_token)
     response = await client.post(
         '/auth/users/refresh-token',
@@ -63,6 +86,11 @@ async def _refresh_token(user: UserState) -> UserState:
 
 
 async def validate_token(user: UserState) -> UserState:
+    """
+    Check access token for efficiency and refresh it if it's necessary
+    :param user: UserState - state of user
+    :return:
+    """
     client = await get_client(user.access_token)
     response = await client.get('/profile/me')
     if response.status_code != 200:
