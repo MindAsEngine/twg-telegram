@@ -9,7 +9,7 @@ from aiogram.types.input_file import FSInputFile
 from backend_api.auth import link_account, auth_user, validate_token
 from backend_api.exceptions import AuthError, LinkError
 from utils import render_template
-from bot.models import UserState
+from bot.fsm.states import get_state_data, set_state_data
 from bot.keyboards.command_kbs import get_start_keyboard
 
 router = Router()
@@ -17,9 +17,7 @@ router = Router()
 
 @router.message(CommandStart())
 async def start_command(message: Message, state: FSMContext, command: CommandObject) -> None:
-    if (await state.get_data()) is None:
-        await state.set_data(UserState().dict())
-    user_state = UserState.parse_obj(await state.get_data())
+    user_state = await get_state_data(state)
 
     is_linked = None
     if command.args is not None:

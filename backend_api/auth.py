@@ -1,6 +1,6 @@
 from backend_api.exceptions import AuthError, LinkError
 from backend_api.utils import get_client
-from bot.models import UserState
+from bot.fsm.states import UserState
 
 
 async def link_account(user: UserState, tg_id: int, link_uuid: str) -> UserState:

@@ -4,6 +4,8 @@ from aiogram.types import InlineKeyboardMarkup, WebAppInfo
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from bot.models import UserState
+from bot.fsm.states import UserState
+from bot.fsm.callbacks import TourTypeData, TourTypeENUM
 from config import WEBSITE_URL
 
 
