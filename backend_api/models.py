@@ -21,7 +21,7 @@ class Hospital(BaseModel):
     medias: list[str]
 
 
-class Stars(Enum):
+class StarsENUM(Enum):
     NULL = ''
     ONE = '⭐️'
     TWO = '⭐️⭐️'
@@ -41,7 +41,7 @@ class Hotel(BaseModel):
     slug: str
     name: str
     city: str
-    stars: Stars
+    stars: StarsENUM
     introduction: str
     description: str
     header: str
@@ -50,11 +50,17 @@ class Hotel(BaseModel):
     resort: str
 
 
+class TourTypeENUM(Enum):
+    TOURISM = 'Туризм'
+    MEDICAL = 'Медицинские туры'
+    BUS_TOUR = 'Автобусные туры'
+
+
 class Tour(BaseModel):
     id: int
     slug: str
     title: str
-    tour_type: str
+    type: str
     introduction: str
     description: str
     additional: str
