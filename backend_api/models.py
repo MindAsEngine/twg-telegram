@@ -1,6 +1,11 @@
 from enum import Enum
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+
+
+class Tag(BaseModel):
+    id: int
+    name: str
 
 
 class Country(BaseModel):
@@ -36,6 +41,11 @@ class Resort(BaseModel):
     country: str
 
 
+class Property(BaseModel):
+    id: int
+    name: str
+
+
 class Hotel(BaseModel):
     id: int
     slug: str
@@ -46,8 +56,8 @@ class Hotel(BaseModel):
     description: str
     header: str
     medias: list[str]
-    properties: list[str]
-    resort: str
+    properties: list[Property]
+    resort: Resort
 
 
 class TourTypeENUM(Enum):
@@ -60,13 +70,19 @@ class Tour(BaseModel):
     id: int
     slug: str
     title: str
-    type: str
+    type: TourTypeENUM
     introduction: str
     description: str
     additional: str
-    country: str
+    country: Country
     header: str
     medias: list[str]
-    tags: list[str]
+    tags: list[Tag]
     price: int
 
+class Page[T](BaseModel):
+    number: int
+    size: int
+    total_pages: int = Field(..., alias='totalPages')
+    total_elements: int = Field(..., alias='totalElements')
+    content: list[T]

@@ -2,16 +2,18 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup
 from pydantic import BaseModel, Field
 
+from backend_api.models import StarsENUM, TourTypeENUM
+
 
 class TourFilters(BaseModel):
-    country_ids: list[int] | None = Field(None, alias="countryIds")
-    hotel_ids: list[int] | None = Field(None, alias="hotelIds")
-    resort_ids: list[int] | None = Field(None, alias="resortIds")
-    tag_ids: list[int] | None = Field(None, alias="tagIds")
-    tour_stars: list[str] | None = Field(None, alias="stars")
-    hospital_ids: list[int] | None = Field(None, alias="hospitalIds")
-    tour_types: list[str] | None = Field(None, alias="tourTypes")
-
+    country_ids: list[int] | None = Field(default_factory=list, alias="countryIds")
+    hotel_ids: list[int] | None = Field(default_factory=list, alias="hotelIds")
+    resort_ids: list[int] | None = Field(default_factory=list, alias="resortIds")
+    tag_ids: list[int] | None = Field(default_factory=list, alias="tagIds")
+    tour_stars: list[str] | None = Field(default_factory=list, alias="stars")
+    hospital_ids: list[int] | None = Field(default_factory=list, alias="hospitalIds")
+    tour_type: str | None = Field(None, alias="tourTypes")
+    
 
 class UserState(BaseModel):
     is_linked: bool = Field(False, alias="is_linked")
@@ -21,6 +23,7 @@ class UserState(BaseModel):
     refresh_token: str | None = Field(None, alias="refresh_token")
 
     filters: TourFilters | None = TourFilters()
+    local: str = Field('RU', alias="local")
 
     def clear_filters(self) -> None:
         """

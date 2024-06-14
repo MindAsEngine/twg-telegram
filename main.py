@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi import Request
 
 from api import api_router
-from bot import bot, dp
+from bot.bot import bot, dp
 
 from config import WEBHOOK_URL
 

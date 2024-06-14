@@ -1,18 +1,22 @@
-import logging
-
 from aiogram import Router
-from aiogram.filters import CommandObject, CommandStart
+from aiogram.filters import CommandObject, CommandStart, Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from aiogram.types.input_file import FSInputFile
 
 from backend_api.auth import link_account, auth_user, validate_token
 from backend_api.exceptions import AuthError, LinkError
+from backend_api.handlers.tags import get_tags
 from utils import render_template
 from bot.fsm.states import get_state_data, set_state_data
 from bot.keyboards.command_kbs import get_start_keyboard
 
 router = Router()
+
+
+@router.message(Command('test'))
+async def test():
+    await get_tags()
 
 
 @router.message(CommandStart())
