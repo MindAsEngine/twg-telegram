@@ -1,19 +1,19 @@
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_serializer
 
 from backend_api.models import StarsENUM, TourTypeENUM
 
 
 class TourFilters(BaseModel):
-    country_ids: list[int] | None = Field(default_factory=list, alias="countryIds")
-    hotel_ids: list[int] | None = Field(default_factory=list, alias="hotelIds")
-    resort_ids: list[int] | None = Field(default_factory=list, alias="resortIds")
-    tag_ids: list[int] | None = Field(default_factory=list, alias="tagIds")
-    tour_stars: list[str] | None = Field(default_factory=list, alias="stars")
-    hospital_ids: list[int] | None = Field(default_factory=list, alias="hospitalIds")
-    tour_type: str | None = Field(None, alias="tourTypes")
-    
+    country_ids: list[int] | None = Field(default_factory=list)
+    hotel_ids: list[int] | None = Field(default_factory=list)
+    resort_ids: list[int] | None = Field(default_factory=list)
+    tag_ids: list[int] | None = Field(default_factory=list)
+    tour_stars: list[str] | None = Field(default_factory=list)
+    hospital_ids: list[int] | None = Field(default_factory=list)
+    tour_type: str | None = Field(default=None)
+
 
 class UserState(BaseModel):
     is_linked: bool = Field(False, alias="is_linked")

@@ -1,8 +1,7 @@
 Выберите тэги, по которым хотите фильтровать туры!
-
 {% if tags %}
 Вы выбрали:
-{% for tag in tags %}
+{%- for tag in tags %}
 - {{ tag.name }}
-{% endfor %}
+{%- endfor %}
 {% endif %}

@@ -80,6 +80,7 @@ class Tour(BaseModel):
     tags: list[Tag]
     price: int
 
+
 class Page[T](BaseModel):
     number: int
     size: int

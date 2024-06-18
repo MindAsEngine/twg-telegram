@@ -10,18 +10,31 @@ class TourTypeData(CallbackData, prefix='tt'):
     is_custom: bool = False
 
 
-class TourPageData(CallbackData, prefix='tp'):
-    page: int = 0
-
-
-class ActionENUM(Enum):
+class TagActionENUM(Enum):
     ADD = 'Add'
     REMOVE = 'Remove'
     ACCEPT = 'Accept'
     REJECT = 'Reject'
+    PAGE = 'Page'
 
 
 class TagData(CallbackData, prefix='tag'):
     id: int | None = None
     page: int | None = None
-    action: ActionENUM | None = None
+    action: TagActionENUM | None = None
+
+
+class TourActionENUM(Enum):
+    ADD = 'Add'
+    REMOVE = 'Remove'
+    ACCEPT = 'Accept'
+    PAGE = 'Page'
+    DETAILS = 'Details'
+    PHOTOS = 'Photos'
+    RESET = 'Reset'
+
+
+class TourData(CallbackData, prefix='tour'):
+    id: int | None = None
+    page: int | None = None
+    action: TourActionENUM | None = None

@@ -9,7 +9,7 @@ BACKEND_URL = os.getenv('BACKEND_URL')
 WEBHOOK_URL = os.getenv('WEBHOOK_URL')
 WEBSITE_URL = os.getenv('WEBSITE_URL')
 
-CUSTOM_TAG_ID = os.getenv('CUSTOM_TAG_ID')
+CUSTOM_TAG_ID = int(os.getenv('CUSTOM_TAG_ID'))
 
 REDIS_HOST = os.getenv('REDIS_HOST')
 REDIS_PORT = os.getenv('REDIS_PORT')
